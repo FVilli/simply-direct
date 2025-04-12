@@ -36,7 +36,7 @@
     "watch": "tsc --watch",
     "lint": "eslint src --ext ts",
     "test": "ts-node test.ts",
-    "publish": "npm run build && npm version patch && git commit -am \"v$(npm version patch)\" && git tag v$(npm version patch) && git push && git push --tags",
+    "do:publish": "npm run build && npm version patch && git commit -am \"v$(npm version patch)\" && git tag v$(npm version patch) && git push && git push --tags",
     "try:publish": "npm run build && npm publish --access public --dry-run"
   },
   "dependencies": {
