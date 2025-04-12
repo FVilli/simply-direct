@@ -37,8 +37,8 @@
     "lint": "eslint src --ext ts",
     "test": "ts-node test.ts",
     "prepublish": "npm version patch --no-git-tag-version",
-    "publish": "npm run build && npm publish @fvilli/simply-direct --access public",
-    "try:publish": "npm run build && npm publish @fvilli/simply-direct --access public --dry-run"
+    "publish": "npm run build && npm publish --access public",
+    "try:publish": "npm run build && npm publish --access public --dry-run"
   },
   "dependencies": {
         "@zenstackhq/server": "^2.13.0",
