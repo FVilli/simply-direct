@@ -6,7 +6,7 @@ npm run build
 
 # Commit e tag personalizzati
 git add .
-git commit -m "chore(release): bump to $VERSION"
+git commit -m "release $VERSION"
 git tag "$VERSION"
 
 # Push
