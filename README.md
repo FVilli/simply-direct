@@ -188,3 +188,5 @@ simply run `npm run dev` to see a more complicated result [schema.md](./schema.m
     ```
 
     The mermaid-cli will find the mermaid diagrams, create SVG files from them and refer to those in the markdown output.
+
+    test
