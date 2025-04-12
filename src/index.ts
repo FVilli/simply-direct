@@ -14,17 +14,17 @@ export default async function run(model: Model, options: PluginOptions) {
     
     if (process.env.DISABLE_ZENSTACK_MD === 'true' || options.disable) return;
 
-    const dirname1 = path.join(__dirname, './');
-    const filename = path.join(__filename, './');
-    const processcwd = path.join(process.cwd(), './');
-    const dirname2 = path.dirname(__filename);
+    const resources = path.join(__dirname, '../resources');
+    // const filename = path.join(__filename, './');
+    // const processcwd = path.join(process.cwd(), './');
+    // const dirname2 = path.dirname(__filename);
 
     console.log(`\r${name} started...`);
 
-    console.log("dirname1",dirname1);
-    console.log("filename",filename);
-    console.log("processcwd",processcwd);
-    console.log("dirname2",dirname2);
+    // console.log("dirname1",dirname1);
+    // console.log("filename",filename);
+    // console.log("processcwd",processcwd);
+    // console.log("dirname2",dirname2);
     
     let backendFolder = (options.backendFolder as string) ?? './';
     let frontendFolder = (options.frontendFolder as string) ?? '../frontend';
@@ -38,6 +38,10 @@ export default async function run(model: Model, options: PluginOptions) {
     if(!await fs.exists(backendFolder)) throw new Error('Backend Folder does not exist');
     if(!await fs.exists(frontendFolder)) throw new Error('Frontend Folder does not exist');
 
+    await saveResourceIfNotExists("base.zmodel",resources,backendFolder);
+    await saveResourceIfNotExists("user.zmodel",resources,backendFolder);
+    await saveResourceIfNotExists("client.zmodel",resources,backendFolder);
+
     const executionLogFileBackend = path.join(backendFolder, `__${name}.log`);
     const executionLogFileFrontend = path.join(frontendFolder, `__${name}.log`);
     
@@ -50,4 +54,10 @@ export default async function run(model: Model, options: PluginOptions) {
     })
     
     console.log(`${name} executed successfully!`);
+}
+
+async function saveResourceIfNotExists(file: string, sourceFolder: string, destFolder: string) {
+    const source = path.join(sourceFolder,file);
+    const dest = path.join(destFolder,file);
+    if(!(await fs.exists(dest))) await fs.copyFile(source,dest);
 }
