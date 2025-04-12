@@ -1,7 +1,7 @@
 {
   "name": "@ifedex/simply-direct",
   "displayName": "ZenStack Generator",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "A unified fullstack communication approach for NestJS + Angular with bidirectional real-time sync via sockets.",
   "main": "index.js",
   "repository": {
@@ -36,7 +36,8 @@
     "watch": "tsc --watch",
     "lint": "eslint src --ext ts",
     "test": "ts-node test.ts",
-    "do:publish": "npm run build && npm version patch && git commit -am \"v$(npm version patch)\" && git tag v$(npm version patch) && git push && git push --tags",
+    "old:do:publish": "npm run build && npm version patch && git commit -am \"V$(npm version patch)\" && git tag v$(npm version patch) && git push && git push --tags",
+    "do:publish": "sh ./publish.sh",
     "try:publish": "npm run build && npm publish --access public --dry-run"
   },
   "dependencies": {
