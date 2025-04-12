@@ -1,7 +1,7 @@
 {
   "name": "@fvilli/simply-direct",
   "displayName": "ZenStack Generator",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A unified fullstack communication approach for NestJS + Angular with bidirectional real-time sync via sockets.",
   "main": "dist/index.js",
   "repository": {
@@ -31,7 +31,7 @@
   ],
   "scripts": {
     "clean": "rimraf dist",
-    "build": "npm run clean && tsc && copyfiles ./package.json ./README.md ./LICENSE dist",
+    "build": "npm run clean && tsc && copyfiles ./resources ./package.json ./README.md ./LICENSE dist",
     "dev": "zenstack generate",
     "watch": "tsc --watch",
     "lint": "eslint src --ext ts",

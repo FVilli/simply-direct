@@ -1,0 +1,10 @@
+model Client extends BaseEntity {
+
+  agent           String        
+  token           String?       
+  sessions        Int           @default(0)
+ 
+  user_id         Int?         
+  user            User?         @relation(fields: [user_id], references: [id])
+  
+}

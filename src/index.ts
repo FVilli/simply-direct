@@ -1,9 +1,9 @@
 import { resolvePath, type PluginOptions } from '@zenstackhq/sdk';
-import { DataModel, isDataModel, type Model } from '@zenstackhq/sdk/ast';
+import { type Model } from '@zenstackhq/sdk/ast';
 import * as fs from 'fs-extra';
-import { writeFile } from 'fs/promises';
 import path from 'path';
 import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
 
 dotenv.config();
 
@@ -14,7 +14,17 @@ export default async function run(model: Model, options: PluginOptions) {
     
     if (process.env.DISABLE_ZENSTACK_MD === 'true' || options.disable) return;
 
-    console.log(`${name} started...`);
+    const dirname1 = path.join(__dirname, './');
+    const filename = path.join(__filename, './');
+    const processcwd = path.join(process.cwd(), './');
+    const dirname2 = path.dirname(__filename);
+
+    console.log(`\r${name} started...`);
+
+    console.log("dirname1",dirname1);
+    console.log("filename",filename);
+    console.log("processcwd",processcwd);
+    console.log("dirname2",dirname2);
     
     let backendFolder = (options.backendFolder as string) ?? './';
     let frontendFolder = (options.frontendFolder as string) ?? '../frontend';

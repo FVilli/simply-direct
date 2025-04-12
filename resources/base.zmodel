@@ -1,0 +1,20 @@
+abstract model BaseEntity {
+
+  id              Int           @id @default(autoincrement())
+  uid             String?       @unique 
+  name            String        @unique
+
+  owned_by        Int? 
+
+  created_at      DateTime      @default(now()) @db.Timestamptz(3)
+  created_by      Int?
+  updated_at      DateTime      @updatedAt @db.Timestamptz(3)
+  updated_by      Int?
+  deleted_at      DateTime?     @db.Timestamptz(3)
+  deleted_by      Int?
+
+  @@allow('all', auth().role == "ADMIN" || auth().role == "SYSTEM")
+  @@allow('all', auth().id == owned_by)
+  @@allow('read', true)
+
+}

@@ -1,0 +1,13 @@
+model User extends BaseEntity {
+
+  email           String?       @unique 
+  phash           String?       @omit
+  role            String?       
+  disabled        Boolean       @default(false)
+
+  clients         Client[]
+  
+  @@deny('delete', name == "system")
+  @@deny('update', name == "system" && auth().name != "system")
+  
+}
