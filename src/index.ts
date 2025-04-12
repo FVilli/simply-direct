@@ -38,6 +38,8 @@ export default async function run(model: Model, options: PluginOptions) {
     if(!await fs.exists(backendFolder)) throw new Error('Backend Folder does not exist');
     if(!await fs.exists(frontendFolder)) throw new Error('Frontend Folder does not exist');
 
+    const zmodelFile = path.join(backendFolder, `schema.zmodel`);
+
     await saveResourceIfNotExists("base.zmodel",resources,backendFolder);
     await saveResourceIfNotExists("user.zmodel",resources,backendFolder);
     await saveResourceIfNotExists("client.zmodel",resources,backendFolder);
@@ -53,14 +55,18 @@ export default async function run(model: Model, options: PluginOptions) {
         ts: new Date().toISOString(),
     })
 
-    const dataModels = model.declarations;//.filter((x): x is DataModel => isDataModel(x) || isAbstractDeclaration(x));
+    const dataModels = model.declarations.filter((x): x is DataModel => isDataModel(x));
 
   for (const dm of dataModels) {
     console.log(dm.name);
-    
   }
+
+  const zmodel = await fs.readFile(zmodelFile);
+  console.log("-----------------------------------------------------");
+  console.log(zmodel);
+  console.log("-----------------------------------------------------");
     
-    console.log(`${name} executed successfully!`);
+  console.log(`${name} executed successfully!`);
 }
 
 async function saveResourceIfNotExists(file: string, sourceFolder: string, destFolder: string) {
