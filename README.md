@@ -1,4 +1,4 @@
-# @fv/simply-direct
+# simply-direct
 
 **Simply Direct** is a fullstack communication library that bridges Angular and NestJS through real-time, bidirectional communication powered by WebSockets.
 
