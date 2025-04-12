@@ -1,7 +1,7 @@
 {
   "name": "@fvilli/simply-direct",
   "displayName": "ZenStack Generator",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "A unified fullstack communication approach for NestJS + Angular with bidirectional real-time sync via sockets.",
   "main": "dist/index.js",
   "repository": {

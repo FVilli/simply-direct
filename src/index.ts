@@ -53,7 +53,7 @@ export default async function run(model: Model, options: PluginOptions) {
         ts: new Date().toISOString(),
     })
 
-    const dataModels = model.declarations.filter((x): x is DataModel => isDataModel(x) || isAbstractDeclaration(x));
+    const dataModels = model.declarations;//.filter((x): x is DataModel => isDataModel(x) || isAbstractDeclaration(x));
 
   for (const dm of dataModels) {
     console.log(dm.name);
