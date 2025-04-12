@@ -1,0 +1,60 @@
+{
+  "name": "@ifedex/simply-direct",
+  "displayName": "ZenStack Generator",
+  "version": "0.0.1",
+  "description": "A unified fullstack communication approach for NestJS + Angular with bidirectional real-time sync via sockets.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fvilli/simply-direct.git"
+  },
+  "publishConfig": {
+        "directory": "dist",
+        "linkDirectory": true
+    },
+  "keywords": [
+    "angular",
+    "nestjs",
+    "realtime",
+    "websockets",
+    "bidirectional",
+    "library",
+    "ngrx",
+    "prisma",
+    "zenstack"
+  ],
+  "author": "FVilli",
+  "license": "MIT",
+  "files": [
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "npm run clean && tsc && copyfiles ./package.json ./README.md ./README-1.svg ./README-2.svg ./LICENSE dist",
+    "dev": "zenstack generate",
+    "watch": "tsc --watch",
+    "lint": "eslint src --ext ts",
+    "test": "ts-node test.ts",
+    "publish": "npm run build && npm publish @fvilli/simply-direct --access public",
+    "try:publish": "npm run build && npm publish @fvilli/simply-direct --access public --dry-run"
+  },
+  "dependencies": {
+        "@zenstackhq/server": "^2.13.0",
+        "@zenstackhq/runtime": "^2.13.0",
+        "@zenstackhq/sdk": "^2.13.0",
+        "dotenv": "^16.5.0",
+        "fs-extra": "^11.3.0"
+    },
+    "devDependencies": {
+        "@prisma/client": "^6.5.0",
+        "@types/node": "^20.3.1",
+        "@types/fs-extra": "^11.0.4",
+        "copyfiles": "^2.4.1",
+        "prisma": "^6.5.0",
+        "rimraf": "^6.0.1",
+        "ts-node": "^10.9.1",
+        "typescript": "^5.8.3",
+        "zenstack": "^2.11.6"
+    }
+}
