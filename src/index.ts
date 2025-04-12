@@ -1,4 +1,4 @@
-import { resolvePath, type PluginOptions } from '@zenstackhq/sdk';
+import { resolvePath, type PluginOptions  } from '@zenstackhq/sdk';
 import { DataModel, isAbstractDeclaration, isDataModel, type Model } from '@zenstackhq/sdk/ast';
 import * as fs from 'fs-extra';
 import path from 'path';
@@ -61,7 +61,7 @@ export default async function run(model: Model, options: PluginOptions) {
     console.log(dm.name);
   }
 
-  const zmodel = await fs.readFile(zmodelFile);
+  const zmodel = await fs.readFile(zmodelFile,{ encoding: 'utf-8' });
   console.log("-----------------------------------------------------");
   console.log(zmodel);
   console.log("-----------------------------------------------------");
