@@ -1,5 +1,5 @@
 import { resolvePath, type PluginOptions } from '@zenstackhq/sdk';
-import { DataModel, isDataModel, type Model } from '@zenstackhq/sdk/ast';
+import { DataModel, isAbstractDeclaration, isDataModel, type Model } from '@zenstackhq/sdk/ast';
 import * as fs from 'fs-extra';
 import path from 'path';
 import dotenv from 'dotenv';
@@ -53,10 +53,11 @@ export default async function run(model: Model, options: PluginOptions) {
         ts: new Date().toISOString(),
     })
 
-    const dataModels = model.declarations.filter((x): x is DataModel => isDataModel(x));
+    const dataModels = model.declarations.filter((x): x is DataModel => isDataModel(x) || isAbstractDeclaration(x));
 
   for (const dm of dataModels) {
     console.log(dm.name);
+    
   }
     
     console.log(`${name} executed successfully!`);
