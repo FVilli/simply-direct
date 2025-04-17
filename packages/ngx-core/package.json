@@ -1,0 +1,32 @@
+{
+  "name": "@simply-direct/ngx-core",
+  "version": "0.0.0",
+  "description": "Angular core service for Simply Direct",
+  "author": "",
+  "license": "MIT",
+  "peerDependencies": {
+    "@angular/core": "^19.0.0",
+    "@angular/common": "^19.0.0",
+    "socket.io-client": "^4.7.0",
+    "rxjs": "^7.8.0",
+    "@ngrx/signals": "^19.0.0"
+  },
+  "devDependencies": {
+    "@angular/core": "^19.0.0",
+    "@angular/common": "^19.0.0",
+    "socket.io-client": "^4.7.0",
+    "rxjs": "^7.8.0",
+    "@ngrx/signals": "^19.0.0",
+    "typescript": "^5.4.0"
+  },
+  "scripts": {
+    "build": "ng build",
+    "test": "ng test"
+  },
+  "keywords": [
+    "angular",
+    "websocket",
+    "frontend",
+    "standalone"
+  ]
+}

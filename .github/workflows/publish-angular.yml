@@ -1,0 +1,41 @@
+name: Publish Package
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'packages/ngx-frontend/**'
+
+jobs:
+  publish:
+    if: startsWith(github.event.head_commit.message, 'release:')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+      - name: Check version consistency
+        run: |
+          ZENSTACK_VERSION=$(node -p "require('./packages/zenstack-plugins/package.json').version")
+          NESTJS_VERSION=$(node -p "require('./packages/nestjs-backend/package.json').version")
+          ANGULAR_VERSION=$(node -p "require('./packages/ngx-frontend/package.json').version")
+          
+          ZENSTACK_MAJOR_MINOR=$(echo $ZENSTACK_VERSION | cut -d. -f1,2)
+          NESTJS_MAJOR_MINOR=$(echo $NESTJS_VERSION | cut -d. -f1,2)
+          ANGULAR_MAJOR_MINOR=$(echo $ANGULAR_VERSION | cut -d. -f1,2)
+          
+          if [ "$ZENSTACK_MAJOR_MINOR" != "$NESTJS_MAJOR_MINOR" ] || [ "$ZENSTACK_MAJOR_MINOR" != "$ANGULAR_MAJOR_MINOR" ]; then
+            echo "Error: Major.Minor versions must be synchronized across all packages"
+            echo "ZenStack: $ZENSTACK_VERSION"
+            echo "NestJS: $NESTJS_VERSION"
+            echo "Angular: $ANGULAR_VERSION"
+            exit 1
+          fi
+      - run: npm ci
+      - run: cd packages/ngx-frontend && npm run build
+      - run: cd packages/ngx-frontend && npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_TOKEN }}

@@ -1,0 +1,20 @@
+{
+  "name": "@simply-direct/common",
+  "version": "0.0.0",
+  "description": "Simply Direct Common Library",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [
+  ],
+  "author": "",
+  "license": "MIT",
+  "peerDependencies": {
+    "socket.io": "^4.8.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}

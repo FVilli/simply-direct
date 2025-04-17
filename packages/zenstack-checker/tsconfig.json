@@ -18,5 +18,5 @@
         "experimentalDecorators": true,
         "strictPropertyInitialization": false
     },
-    "include": ["src/**/*.ts"]
+    "include": ["backend/src/**/*.ts"]
 }

@@ -1,0 +1,38 @@
+{
+  "name": "@simply-direct/nestjs-core",
+  "version": "0.0.0",
+  "description": "Core backend module for Simply Direct",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest"
+  },
+  "keywords": [
+    "nestjs",
+    "websocket",
+    "backend"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@simply-direct/common": "^0.0.0"
+  },
+  "peerDependencies": {
+    "@simply-direct/common":"^0.0.0",
+    "@nestjs/common": "^11.0.9",
+    "@nestjs/core": "^11.0.9",
+    "@nestjs/event-emitter": "^3.0.1",
+    "@nestjs/jwt": "^11.0.0",
+    "@nestjs/passport": "^11.0.5",
+    "@nestjs/platform-socket.io": "^11.0.10",
+    "@nestjs/websockets": "^11.0.10",
+    "@prisma/client": "6.5.0",
+    "@zenstackhq/runtime": "2.13.0",
+    "dotenv": "^16.4.7"
+  },
+  "devDependencies": {
+    "@types/node": "^20.3.1",
+    "typescript": "^5.8.3"
+  }
+}
