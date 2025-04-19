@@ -1,11 +1,17 @@
 {
   "name": "simply-direct",
+  "version": "0.0.0",
   "private": true,
-  "workspaces": ["packages/*"],
-  "displayName": "Simply Direct",
-  "description": "A unified fullstack communication approach for NestJS + Angular with bidirectional real-time sync via sockets.",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/fvilli/simply-direct.git"
+  "workspaces": [
+    "packages-fe/*",
+    "packages-be/*",
+    "packages-shared/*"
+  ],
+  "scripts": {
+
+  },
+  "devDependencies": {
+    "@types/node": "^20.3.1",
+    "typescript": "^5.8.3"
   }
 }

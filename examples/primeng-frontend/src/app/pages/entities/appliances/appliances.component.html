@@ -1,0 +1,96 @@
+<p-panel>
+    <ng-template #header>
+        <app-table-header class="w-full" icon="pi-server" title="Appliances" [busy]="store.busy()" (search)="onGlobalFilter(dt, $event)">
+            <p-button icon="pi pi-plus" severity="secondary" class="ml-2" (onClick)="newItem()" />
+        </app-table-header>
+    </ng-template>
+
+    <p-table
+        [value]="store.hydratedAppliances()" 
+        #dt 
+        [rows]="10"
+        [paginator]="store.hydratedAppliances().length > 10"
+        [globalFilterFields]="['id','name','description','serial_number','mac_address','ip_address','site.name']"
+        [rowHover]="true"
+        dataKey="id"
+        currentPageReportTemplate="{first} - {last} / {totalRecords}"
+        [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[5, 10, 50]"
+        size="small">
+        <ng-template #header>
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th class="hidden sm:table-cell">Description</th>
+                <th class="hidden sm:table-cell">Serial Number</th>
+                <th class="hidden sm:table-cell">Site</th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-item>
+            <tr>
+                <td><small>{{item.id}}</small></td>
+                <td>{{item.name}}</td>
+                <td class="hidden sm:table-cell">{{item.description | truncate:30}}</td>
+                <td class="hidden sm:table-cell">{{item.serial_number}}</td>
+                <td class="hidden sm:table-cell">{{item.site?.name || '-'}}</td>
+                <td class="flex justify-end">
+                    <p-button icon="pi pi-pencil" size="small" [rounded]="true" [text]="true" (click)="store.editItem(item)" />
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    </p-panel>
+
+@if(store.editedItem() && item) { 
+
+    <p-dialog [header]="item.id===0 ? 'Create Appliance' : 'Edit Appliance'" [modal]="true" [visible]="!!item" (visibleChange)="store.cancelEditing()" [style]="{ 'max-width': '34rem' }">
+
+        <span class="p-text-secondary block mb-8 text-gray-500">Appliance details and information</span>
+    
+        <form #itemForm="ngForm" (ngSubmit)="save(itemForm.value)">
+
+            <app-field-container label="Name" field="name">
+                <input pInputText id="name" name="name" [(ngModel)]="item.name" class="flex-auto w-60" required minlength="4" #name="ngModel" />
+                @if(name.invalid && name.touched) {
+                    @if(name.hasError('required')) { <small>Il nome è obbligatorio.</small> }
+                    @if(name.hasError('minlength')) {<small>Minimo 4 caratteri.</small> }
+                }
+            </app-field-container>
+
+            <app-field-container label="Site" field="site_id">
+                <p-select [(ngModel)]="item.site_id" name="site_id" [options]="store.selectSites()" required
+                          optionValue="value" optionLabel="label" [filter]="true" 
+                          placeholder="Select a site (optional)" class="w-80" />
+            </app-field-container>
+            
+            <app-field-container label="Description" field="description">
+                <textarea pTextarea id="description" name="description" [(ngModel)]="item.description" class="flex-auto w-80" rows="5" [autoResize]="true" #description="ngModel"></textarea>
+            </app-field-container>
+
+            <app-field-container label="Serial Number" field="serial_number">
+                <input pInputText id="serial_number" name="serial_number" [(ngModel)]="item.serial_number" class="flex-auto" #serial_number="ngModel" />
+            </app-field-container>
+
+            <app-field-container label="MAC Address" field="mac_address">
+                <input pInputText id="mac_address" name="mac_address" [(ngModel)]="item.mac_address" class="flex-auto" #mac_address="ngModel" />
+            </app-field-container>
+
+            <app-field-container label="IP Address" field="ip_address">
+                <input pInputText id="ip_address" name="ip_address" [(ngModel)]="item.ip_address" class="flex-auto" #ip_address="ngModel" />
+            </app-field-container>
+
+            <app-form-entity-details [item]="store.editedItem()"></app-form-entity-details>
+
+            <div class="flex justify-end gap-2 my-4">
+                <p-button label="Cancel" severity="secondary" (click)="store.cancelEditing()" />
+                <p-button label="Save" [disabled]="!itemForm.dirty || !itemForm.valid" (click)="save(itemForm.value)" />
+            </div>
+        </form>
+
+        @if(store.busy()) { <p-message severity="info" icon="pi pi-spin pi-spinner" text="Busy ..." styleClass="w-full" /> }
+        @if(!!store.error()) {<p-message severity="error" icon="pi pi-exclamation-triangle" [text]="store.error()" styleClass="w-full" />}
+
+    </p-dialog>
+}

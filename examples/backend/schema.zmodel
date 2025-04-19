@@ -1,0 +1,342 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+plugin zenstackmd {
+    provider = 'zenstack-markdown'
+}
+
+// plugin zod {
+//   provider = '@core/zod'
+// }
+
+// plugin trpc {
+//     provider = "@zenstackhq/trpc"
+//     output   = "src/@trpc"
+// }
+
+// plugin openapi {
+//     provider = "@zenstackhq/openapi"
+//     output = "openapi.yaml"
+//     title = "My Todo API"
+//     version = "1.0.0"
+// }
+
+// miei plugins
+
+// plugin markdown {
+//     provider = './dist/zenstack/plugins/markdown'
+//     title = 'My Awesome Todo App'
+//     description = 'A multi-tenant Todo application built with ZenStack.'
+// }
+
+// plugin analyze {
+//     provider = './dist/zenstack/plugins/analyze'
+//     //title = "titolo da passare al plugin perchè magari gli serve ... (si intende il titolo dell'app)"
+//     //description = '...vedi titolo'
+//     //maxDepth = 2
+//     //opzione_strana_numerica=123
+//     //opzione_obj = {a:1,b:2,c:'fede'}
+// }
+
+abstract model BaseEntity {
+
+  id              Int           @id @default(autoincrement())
+  uid             String?       @unique 
+  name            String        @unique
+
+  owned_by        Int? 
+
+  created_at      DateTime      @default(now()) @db.Timestamptz(3)
+  created_by      Int?
+  updated_at      DateTime      @updatedAt @db.Timestamptz(3)
+  updated_by      Int?
+  deleted_at      DateTime?     @db.Timestamptz(3)
+  deleted_by      Int?
+
+  //@@allow('read, update', auth().id == owned_by)
+  @@allow('all', auth().role == "ADMIN" || auth().role == "SYSTEM")
+  @@allow('all', auth().id == owned_by)
+  @@allow('read', true)
+}
+
+// ruoli: user,admin
+model User extends BaseEntity {
+
+  email           String?       @unique 
+  phash           String?       @omit
+  role            String?       
+  disabled        Boolean       @default(false)
+
+  clients         Client[]
+  
+  @@deny('delete', name == "system") // Nega l'eliminazione dell'utente "system"
+  @@deny('update', name == "system" && auth().name != "system") // Nega l'aggiornamento dell'utente "system" se non fatto da se stesso
+}
+
+model Client extends BaseEntity {
+
+  agent           String        
+  token           String?       
+  sessions        Int           @default(0)
+ 
+  user_id         Int?         
+  user            User?         @relation(fields: [user_id], references: [id])
+}
+ 
+model Company extends BaseEntity {
+
+  legal_name          String?     @unique
+  vat_number          String?     @unique
+  registration_number String?     @unique
+
+  sites               Site[]         
+}
+
+model Site extends BaseEntity {
+
+  address        String?       
+  city           String?       
+  postal_code    String?       
+  state          String?       
+  country        String?       
+  phone          String?       
+  is_active      Boolean       @default(true)
+  latitude       Float?        
+  longitude      Float?        
+
+  company_id     Int?         
+  company        Company?      @relation(fields: [company_id], references: [id])
+
+  appliances     Appliance[]
+}
+
+model Appliance extends BaseEntity {
+
+  description     String?       
+  serial_number   String?       
+  mac_address     String?       
+  ip_address      String?       
+
+  settings_version  Int?       
+  settings          Json?       @db.JsonB
+
+  site_id         Int?         
+  site            Site?         @relation(fields: [site_id], references: [id])
+
+  devices         Device[]
+}
+
+model SettingsHistory extends BaseEntity {
+
+  settings_version  Int?       
+  settings          Json?       @db.JsonB
+
+}
+ 
+model Vendor extends BaseEntity {
+
+  description     String?       
+
+  device_types     DeviceType[]
+}
+
+model Category extends BaseEntity {
+
+  description     String?       
+
+  parent_id       Int?         
+  parent          Category?     @relation("hierarchy", fields: [parent_id], references: [id])
+  children        Category[]    @relation("hierarchy")
+
+  device_types     DeviceType[]
+  sensor_types     SensorType[]
+}
+
+model DeviceType extends BaseEntity {
+
+  description       String?     
+
+  settings_version  Int?       
+  settings          Json?       @db.JsonB
+
+  category_id       Int?       
+  category          Category?   @relation(fields: [category_id], references: [id])
+
+  vendor_id         Int?       
+  vendor            Vendor?     @relation(fields: [vendor_id], references: [id])
+
+  mappings          DeviceSensorMapping[]
+  devices           Device[]
+}
+
+model SensorType extends BaseEntity {
+
+  description       String?     
+
+  settings_version  Int?       
+  settings          Json?       @db.JsonB
+
+  category_id       Int?       
+  category          Category?   @relation(fields: [category_id], references: [id])
+
+  device_mappings   DeviceSensorMapping[]
+  measure_mappings  SensorMeasureMapping[]
+}
+
+model DeviceSensorMapping { // NOT extends BaseEntity !!
+
+  id              Int        @id @default(autoincrement())
+
+  device_type_id  Int       
+  device_type     DeviceType @relation(fields: [device_type_id], references: [id])
+
+  sensor_type_id  Int       
+  sensor_type     SensorType @relation(fields: [sensor_type_id], references: [id])
+
+  idx             Int
+  channel         String?  
+
+  sensors         Sensor[]
+
+  @@unique([idx, device_type_id, sensor_type_id])
+}
+
+model Device extends BaseEntity {
+
+  description       String?     
+  serial_number     String?     
+  mac_address       String?     
+  ip_address        String?       
+
+  settings_version  Int?       
+  settings          Json?       @db.JsonB
+  additional_info   Json?       @db.JsonB
+
+  parent_id         Int?       
+  parent            Device?     @relation("hierarchy", fields: [parent_id], references: [id])
+  children          Device[]    @relation("hierarchy")
+
+  device_type_id    Int        
+  device_type       DeviceType  @relation(fields: [device_type_id], references: [id])
+
+  appliance_id      Int        
+  appliance         Appliance   @relation(fields: [appliance_id], references: [id])
+
+  sensors           Sensor[]
+}
+
+model Sensor extends BaseEntity {
+
+  description       String?     
+  serial_number     String?     
+  mac_address       String?     
+  ip_address        String?       
+
+  settings_version  Int?       
+  settings          Json?       @db.JsonB
+  additional_info   Json?       @db.JsonB
+
+  parent_id         Int?       
+  parent            Sensor?     @relation("hierarchy", fields: [parent_id], references: [id])
+  children          Sensor[]    @relation("hierarchy")
+
+  device_id         Int        
+  device            Device      @relation(fields: [device_id], references: [id])
+
+  mapping_id        Int        
+  mapping           DeviceSensorMapping     @relation(fields: [mapping_id], references: [id])
+}
+
+model MeasureType extends BaseEntity {
+
+  description String?    
+  unit        String?    
+  value_type  String     
+
+  aggregates  MeasureTypeAggregate[]
+  mappings    SensorMeasureMapping[]
+}
+
+model MeasureTypeAggregate extends BaseEntity {
+
+  description String?    
+
+  measure_type_id   Int          
+  measure_type      MeasureType   @relation(fields: [measure_type_id], references: [id])  
+  
+  aggregate_function            String    
+  aggregate_function_parameters Json      @db.JsonB
+
+  rollup_function               String?   
+  rollup_function_parameters    Json?     @db.JsonB
+
+  accessors   MeasureTypeAggregateAccessor[]
+}
+
+model MeasureTypeAggregateAccessor extends BaseEntity {
+
+  description String?    
+  unit        String?    
+  value_type  String     
+
+  measure_type_aggregate_id   Int                  
+  measure_type_aggregate      MeasureTypeAggregate  @relation(fields: [measure_type_aggregate_id], references: [id])  
+  
+  accessor_function            String   
+  accessor_function_parameters Json     @db.JsonB
+}
+
+model DefaultValueTypeAggregate extends BaseEntity {
+
+  value_type  String     
+
+  aggregate_function            String    
+  aggregate_function_parameters Json      @db.JsonB
+
+  rollup_function               String?   
+  rollup_function_parameters    Json?     @db.JsonB
+
+  accessors  DefaultValueTypeAggregateAccessor[]
+}
+
+model DefaultValueTypeAggregateAccessor extends BaseEntity {
+
+  default_value_type_aggregate_id   Int                        
+  default_value_type_aggregate      DefaultValueTypeAggregate   @relation(fields: [default_value_type_aggregate_id], references: [id])  
+  
+  accessor_function            String   
+  accessor_function_parameters Json     @db.JsonB
+}
+
+model SensorMeasureMapping {  // NOT extends BaseEntity !!
+  id              Int        @id @default(autoincrement())
+  is_index        Boolean    
+
+  sensor_type_id    Int        
+  sensor_type       SensorType  @relation(fields: [sensor_type_id], references: [id])
+
+  measure_type_id   Int        
+  measure_type      MeasureType @relation(fields: [measure_type_id], references: [id])
+
+  @@unique([sensor_type_id,measure_type_id])
+}
+
+model Measure { // NOT extends BaseEntity !!
+  timestamp         DateTime     @default(now()) @db.Timestamptz(3)
+  sensor_id         Int          
+  measure_type_id   Int          
+
+  int_value         Int?         
+  float_value       Float?       
+  bool_value        Boolean?     
+
+  @@id([timestamp, sensor_id, measure_type_id])
+}
+
+ 
