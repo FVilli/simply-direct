@@ -23,7 +23,9 @@
       "noEmitOnError": true,
 
       "paths": {
-        "@simply-direct/common": ["packages/common/src"]
+        "@simply-direct/common": ["packages/common/src"],
+        "@simply-direct/nestjs-core": ["packages/nestjs-core/src"],
+        "@simply-direct/ngx-core": ["packages/ngx-core/src/public-api.ts"]
       }
     }
   }

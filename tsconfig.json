@@ -10,6 +10,11 @@
         { "path": "apps/frontend-primeng" }
     ],
     "compilerOptions": {
-        "baseUrl": "."
+        "baseUrl": ".",
+        "paths": {
+          "ngx-core": [
+            "./dist/ngx-core"
+          ]
+        }
     }
   }
