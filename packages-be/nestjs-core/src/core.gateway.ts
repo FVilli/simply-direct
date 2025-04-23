@@ -7,8 +7,8 @@ import { ENV } from './env';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaClient } from '@prisma/client';
 import { Injectable, OnApplicationBootstrap, OnModuleInit } from '@nestjs/common';
-
 import { hash, QUID, distinctSubscriptions, isMatching, ITdt } from './utils.functions';
+import { BaseService, IAuth, IEvent, IJwtPayload, ILoginMsg, ILogoutMsg, IRefreshMsg, IResponse, ISocketSession, Message, User } from '@simply-direct/common'
 
 @Injectable() export class PrismaService extends PrismaClient implements OnModuleInit { async onModuleInit() { await this.$connect(); } }
 
@@ -106,9 +106,9 @@ export class CoreGateway implements OnApplicationBootstrap {
           break;
       }
       return { data: session.auth, status: !!session.auth ? 'OK' : 'NO-AUTH' };
-    } catch (err) {
-      console.error('err:', err.message);
-      return { err: err.message };
+    } catch (err:any) {
+      console.error('err:', err?.message);
+      return { err: err?.message };
     }
   }
 
@@ -154,8 +154,8 @@ export class CoreGateway implements OnApplicationBootstrap {
       });
       delete user.phash;
       return { user, token };
-    } catch (err) {
-      console.error(err.message);
+    } catch (err:any) {
+      console.error(err?.message);
       await this.prisma.client.update({
         where: { name: payload.clientId },
         data: { token: null, user_id: null, updated_at: new Date() },
@@ -178,9 +178,9 @@ export class CoreGateway implements OnApplicationBootstrap {
       const requiresAuth = this.ServicesMap.get(serviceName).requiresAuth;
       if (requiresAuth && !auth && !ENV.SKIP_AUTH) throw new Error('Unauthorized');
       return { data: await service[methodName](msg.payload, auth) };
-    } catch (err) {
-      console.error('err:', err.message);
-      return { err: err.message };
+    } catch (err:any) {
+      console.error('err:', err?.message);
+      return { err: err?.message };
     }
   }
 
@@ -204,7 +204,7 @@ export class CoreGateway implements OnApplicationBootstrap {
         console.log(`${ITdt()} <CORE> [executed] ${msg.topic} requested by ${auth?.user.id} in ${ms} ms`);
       });
       return { status: 'OK' };
-    } catch (err) {
+    } catch (err:any) {
       console.error('err:', err.message);
       return { err: err.message };
     }
@@ -224,7 +224,7 @@ export class CoreGateway implements OnApplicationBootstrap {
       if((ENV.NOT_ALLOWED_PRISMA_METHODS).includes(methodName)) throw new Error('Method not allowed');
       const data = await this._prismaHnd<T>(entityName, methodName, msg.payload, auth?.user);
       return { data };
-    } catch (err) {
+    } catch (err:any) {
       console.error('err:', err.message);
       return { err: err.message };
     }
@@ -288,9 +288,9 @@ export class CoreGateway implements OnApplicationBootstrap {
           break;
       }
       return session.subscriptions;
-    } catch (err) {
-      console.error(`${ITdt()} <CORE> err:`, err.message);
-      return { error: err.message };
+    } catch (err:any) {
+      console.error(`${ITdt()} <CORE> err:`, err?.message);
+      return { error: err?.message };
     }
   }
 

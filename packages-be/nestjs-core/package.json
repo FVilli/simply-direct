@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
+    "postinstall": "node postinstall.js",
     "build": "tsc",
     "test": "jest"
   },
@@ -16,10 +17,10 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    
+    "@simply-direct/common": "*",
+    "@simply-direct/zenstack-checker": "*"
   },
   "peerDependencies": {
-    "@simply-direct/common":"^0.0.0",
     "@nestjs/common": "^11.0.9",
     "@nestjs/core": "^11.0.9",
     "@nestjs/event-emitter": "^3.0.1",
@@ -33,7 +34,6 @@
   },
   "devDependencies": {
     "@types/node": "^20.3.1",
-    "typescript": "^5.8.3",
-    "@simply-direct/common": "*"
+    "typescript": "^5.8.3"
   }
 }

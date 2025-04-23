@@ -1,41 +1,15 @@
 {
-  "compilerOptions": {
-    "target": "ES2020",
-    "module": "commonjs",
-    "composite": true,
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
-    "strict": true,
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "strictBindCallApply": true,
-    "strictPropertyInitialization": true,
-    "noImplicitThis": true,
-    "alwaysStrict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "baseUrl": ".",
-    "paths": {
-      "@simply-direct/nestjs-core": ["packages-be/nestjs-core/src"],
-      "@simply-direct/nestjs-core/*": ["packages-be/nestjs-core/src/*"],
-      "@simply-direct/ngx-core": ["packages-fe/ngx-core/src"],
-      "@simply-direct/ngx-core/*": ["packages-fe/ngx-core/src/*"]
+    "files": [],
+    "references": [
+        { "path": "packages-shared/common" }, 
+        { "path": "packages-be/nestjs-core" },
+        { "path": "packages-be/zenstack-checker" },
+        { "path": "packages-fe/ngx-core" },
+        { "path": "app/backend" },
+        { "path": "app/frontend-blank" },
+        { "path": "app/frontend-primeng" }
+    ],
+    "compilerOptions": {
+        "baseUrl": "."
     }
-  },
-  "exclude": ["node_modules", "dist", "**/dist/*"],
-  "references": [
-    { "path": "./packages-be/nestjs-core" },
-    { "path": "./packages-fe/ngx-core" },
-    { "path": "./examples/primeng-frontend" },
-    { "path": "./examples/backend" }
-  ]
-}
+  }

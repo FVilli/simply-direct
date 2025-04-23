@@ -43,3 +43,10 @@ export function crossTabCounter(name:string): number {
 export function clone<T>(obj: T): T {
   return JSON.parse(JSON.stringify(obj));
 }
+// trasforma un guid xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx in un base64 (STRINGA LUNGA 22 CHAR)
+export function uuidToBase64(uuid: string): string {
+  const hex = uuid.replace(/-/g, '');
+  const bytes = new Uint8Array(hex.match(/.{1,2}/g)!.map(byte => parseInt(byte, 16)));
+  const binary = String.fromCharCode(...bytes);
+  return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}

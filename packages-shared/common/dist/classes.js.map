@@ -1,1 +1,1 @@
-{"version":3,"file":"classes.js","sourceRoot":"","sources":["../src/classes.ts"],"names":[],"mappings":";;;AAAA,MAAa,WAAW;IACtB,IAAI,WAAW;QACb,OAAO,IAAI,CAAC,WAAW,CAAC,IAAI,CAAC;IAC/B,CAAC;CACF;AAJD,kCAIC"}
+{"version":3,"file":"classes.js","sourceRoot":"","sources":["../src/classes.ts"],"names":[],"mappings":";;;AAAA,MAAa,WAAW;IACtB,IAAI,WAAW;QACb,OAAO,IAAI,CAAC,WAAW,CAAC,IAAI,CAAC;IAC/B,CAAC;CACF;AAJD,kCAIC","sourcesContent":["export class BaseService {\n  get serviceName() {\n    return this.constructor.name;\n  }\n}\n"]}

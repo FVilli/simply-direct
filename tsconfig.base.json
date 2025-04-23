@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+
+      "baseUrl": ".",
+
+      "target": "es2022",
+      "module": "commonjs",
+      "sourceMap": true,
+      "inlineSources": true,
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "strict": true,
+      "moduleResolution": "node",
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true,
+  
+      // project references
+      "composite": true,
+      "declaration": true,
+      "declarationMap": true,
+      "incremental": true,
+      "skipLibCheck": true,
+      "noEmitOnError": true,
+
+      "paths": {
+        "@simply-direct/common": ["packages-shared/common/src"]
+      }
+    }
+  }

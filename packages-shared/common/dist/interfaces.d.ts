@@ -1,6 +1,10 @@
 import { Socket } from 'socket.io';
 import { MsgType } from './enums';
 import { User } from './types';
+export interface IError {
+    message?: string;
+    stack?: string;
+}
 export interface ISocketSession {
     socket: Socket;
     clientId?: string;
@@ -55,3 +59,4 @@ export interface IJwtPayload {
     sub: number;
     clientId: string;
 }
+//# sourceMappingURL=interfaces.d.ts.map

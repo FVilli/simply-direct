@@ -5,3 +5,4 @@ export declare function isMatching(event: string, subscriptions: string[]): bool
 export declare function distinctSubscriptions(subscriptions: ISubscriptions): string[];
 export declare function crossTabCounter(name: string): number;
 export declare function clone<T>(obj: T): T;
+//# sourceMappingURL=functions.d.ts.map

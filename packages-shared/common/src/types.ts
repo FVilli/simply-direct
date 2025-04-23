@@ -16,6 +16,7 @@ export type User = {
   phash: string | null
   role: string | null
   disabled: boolean;
+  [key: string]: any;
 }
 
 export type Message<T> = {

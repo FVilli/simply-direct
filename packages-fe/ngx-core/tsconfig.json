@@ -1,29 +1,36 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "composite": true,
-    "target": "ES2022",
+    "outDir": "./dist",
+    "rootDir": "./src",   
+
     "module": "ES2022",
-    "moduleResolution": "node",
-    "declaration": true,
-    "sourceMap": true,
+    "lib": ["es2022", "dom"],
+    "skipDefaultLibCheck": true,
     "inlineSources": true,
+    "importHelpers": true,
+
+    "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "importHelpers": true,
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "lib": ["es2022", "dom"],
-    "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
+    "allowSyntheticDefaultImports": true,
     "baseUrl": "./",
-    "strict": true
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false,
   },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "test"],
+  "references": [
+    { "path": "../../packages-shared/common" },
+  ],
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"]
 }
+

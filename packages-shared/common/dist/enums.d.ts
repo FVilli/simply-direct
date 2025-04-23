@@ -8,3 +8,4 @@ export declare enum MsgType {
     rsp = "rsp",
     evt = "evt"
 }
+//# sourceMappingURL=enums.d.ts.map

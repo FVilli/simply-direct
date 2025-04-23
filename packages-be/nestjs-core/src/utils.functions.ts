@@ -1,5 +1,8 @@
-import * as crypto from 'crypto';
+
 import { ISubscriptions } from '@simply-direct/common';
+import * as crypto from 'crypto';
+
+
 
 export function hash(text: string): string {
   return crypto.createHash('sha256').update(text).digest('base64');

@@ -38,16 +38,17 @@
     "try:publish": "npm run build && npm publish --access public --dry-run"
   },
   "dependencies": {
-    "@zenstackhq/server": "^2.13.0",
+    "@simply-direct/common": "^0.0.0",
     "@zenstackhq/runtime": "^2.13.0",
     "@zenstackhq/sdk": "^2.13.0",
+    "@zenstackhq/server": "^2.13.0",
     "dotenv": "^16.5.0",
     "fs-extra": "^11.3.0"
   },
   "devDependencies": {
     "@prisma/client": "^6.5.0",
-    "@types/node": "^20.3.1",
     "@types/fs-extra": "^11.0.4",
+    "@types/node": "^20.3.1",
     "copyfiles": "^2.4.1",
     "prisma": "^6.5.0",
     "rimraf": "^6.0.1",

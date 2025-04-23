@@ -38,3 +38,4 @@ export type Response<T> = {
     data: T;
     err?: string;
 };
+//# sourceMappingURL=types.d.ts.map
