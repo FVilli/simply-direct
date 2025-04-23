@@ -3,8 +3,13 @@
   "version": "0.0.0",
   "private": true,
   "workspaces": [
-    "packages/*",
-    "apps/*"
+    "packages/common",
+    "packages/nestjs-core",
+    "packages/zenstack-checker",
+    "packages/ngx-core",
+    "apps/backend",
+    "apps/frontend-blank",
+    "apps/frontend-primeng"
   ],
   "scripts": {
     "build:all": "npx tsc --build"

@@ -24,7 +24,7 @@
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "test"],
   "references": [
-    { "path": "../../packages-shared/common" },
+    { "path": "../common" },
   ],
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

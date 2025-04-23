@@ -18,7 +18,7 @@
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "test"],
   "references": [
-    { "path": "../../packages-shared/common" },
+    { "path": "../common" },
     { "path": "../zenstack-checker" }
   ]
 }
