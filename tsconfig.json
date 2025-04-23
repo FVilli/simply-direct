@@ -1,13 +1,13 @@
 {
     "files": [],
     "references": [
-        { "path": "packages-shared/common" }, 
-        { "path": "packages-be/nestjs-core" },
-        { "path": "packages-be/zenstack-checker" },
-        { "path": "packages-fe/ngx-core" },
-        { "path": "app/backend" },
-        { "path": "app/frontend-blank" },
-        { "path": "app/frontend-primeng" }
+        { "path": "packages/common" }, 
+        { "path": "packages/nestjs-core" },
+        { "path": "packages/zenstack-checker" },
+        { "path": "packages/ngx-core" },
+        { "path": "apps/backend" },
+        { "path": "apps/frontend-blank" },
+        { "path": "apps/frontend-primeng" }
     ],
     "compilerOptions": {
         "baseUrl": "."

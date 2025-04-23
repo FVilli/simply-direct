@@ -3,20 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "workspaces": [
-    "packages-be/nestjs-core",
-    "packages-be/zenstack-checker",
-    "packages-fe/ngx-core",
-    "packages-shared/common",
-    "app/backend",
-    "app/frontend-blank",
-    "app/frontend-primeng"
+    "packages/*",
+    "apps/*"
   ],
   "scripts": {
-    "build:all": "npx tsc --build",
-    "init:common": "cd packages-shared/common && npm i",
-    "init:nestjs-core": "cd packages-be/nestjs-core && npm i",
-    "build:common": "cd packages-shared/common && npm run build",
-    "build:nestjs-core": "cd packages-be/nestjs-core && npm run build"
+    "build:all": "npx tsc --build"
   },
   "devDependencies": {
     "@types/node": "^20.3.1",

@@ -23,7 +23,7 @@
       "noEmitOnError": true,
 
       "paths": {
-        "@simply-direct/common": ["packages-shared/common/src"]
+        "@simply-direct/common": ["packages/common/src"]
       }
     }
   }
