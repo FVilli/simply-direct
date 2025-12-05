@@ -38,7 +38,7 @@
     "try:publish": "npm run build && npm publish --access public --dry-run"
   },
   "dependencies": {
-    "@simply-direct/common": "^0.0.0",
+    "@simply-direct/common": "*",
     "@zenstackhq/runtime": "^2.13.0",
     "@zenstackhq/sdk": "^2.13.0",
     "@zenstackhq/server": "^2.13.0",

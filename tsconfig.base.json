@@ -5,6 +5,7 @@
 
       "target": "es2022",
       "module": "commonjs",
+     
       "sourceMap": true,
       "inlineSources": true,
       "emitDecoratorMetadata": true,

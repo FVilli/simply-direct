@@ -3,20 +3,36 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "outDir": "./dist/out-tsc",
+
+    "baseUrl": ".",
+    
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true,
+    "types": [],
     "isolatedModules": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "moduleResolution": "bundler",
     "importHelpers": true,
     "target": "ES2022",
-    "module": "ES2022"
+    "module": "ES2022",
+    "lib": ["es2022", "dom"],
+    "inlineSources": true,
+    "paths": {
+      "@simply-direct/common": ["packages/common/src"],
+      "@simply-direct/ngx-core": ["packages/ngx-core/src/public-api.ts"]
+    },
+
+    // project references
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "incremental": true,
+    "skipLibCheck": true,
+    "noEmitOnError": true,
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

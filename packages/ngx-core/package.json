@@ -2,14 +2,19 @@
   "name": "@simply-direct/ngx-core",
   "version": "0.0.1",
   "scripts":{
-    "build": "ng build ngx-core"
+    "build": "ng build ngx-core --configuration=development"
   },
   "peerDependencies": {
     "@angular/common": "^19.2.0",
     "@angular/core": "^19.2.0"
   },
+  "devDependencies": {
+    "@angular/common": "^19.2.0",
+    "@angular/core": "^19.2.0"
+  },
   "dependencies": {
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "@simply-direct/common": "*"
   },
   "sideEffects": false
 }
